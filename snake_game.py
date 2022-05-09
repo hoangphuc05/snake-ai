@@ -80,11 +80,12 @@ class SnakeGame:
                     Direction.DOWN: Direction.LEFT,
                     Direction.LEFT: Direction.UP,
                     Direction.RIGHT: Direction.DOWN}
-        current_event = UserAction.STRAIGHT
+        # current_event = UserAction.STRAIGHT
+        current_event = None
 
         
 
-        
+        previous_direction = self.direction
         # 1. collect user input
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -97,8 +98,8 @@ class SnakeGame:
                 elif event.key == pygame.K_RIGHT:
                     self.direction = right_dir[self.direction]
                     current_event = UserAction.RIGHT
-                # elif event.key == pygame.K_UP:
-                    # current_event = UserAction.STRAIGHT
+                elif event.key == pygame.K_UP:
+                    current_event = UserAction.STRAIGHT
                 # elif event.key == pygame.K_UP:
                 #     self.direction = Direction.UP
                 # elif event.key == pygame.K_DOWN:
@@ -106,14 +107,17 @@ class SnakeGame:
         
         # record what happened
         # get food difference on X axis
-        food_diff_x = self.food.x - self.head.x
+        food_diff_x = (self.food.x - self.head.x)/10
         # get food difference on Y axis
-        food_diff_y = self.food.y - self.head.y
+        food_diff_y = (self.food.y - self.head.y)/10
 
         # record data
-        if (current_event != None):
-            self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(self.direction) , int(current_event)])
+        # if (current_event != None):
+        #     self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(current_event)])
         
+        self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(self.direction)])
+
+
         # 2. move
         self._move(self.direction) # update the head
         self.snake.insert(0, self.head)

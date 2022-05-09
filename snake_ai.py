@@ -1,3 +1,4 @@
+
 import pygame
 import random
 from enum import Enum, IntEnum
@@ -116,10 +117,19 @@ class SnakeGame:
         print("Action array: ", ai_action_array)
         ai_action = ai_action_array.argmax() + 1
         print("Action: ", ai_action)
-        if ai_action == 1:
-            self.direction = right_dir[self.direction]
-        elif ai_action == 2:
-            self.direction = left_dir[self.direction]
+        # if ai_action == 1:
+        #     self.direction = right_dir[self.direction]
+        # elif ai_action == 2:
+        #     self.direction = left_dir[self.direction]
+
+        if ai_action == 1 and self.direction != Direction.LEFT:
+            self.direction = Direction.RIGHT
+        elif ai_action == 2 and self.direction != Direction.RIGHT:
+            self.direction = Direction.LEFT
+        elif ai_action == 3 and self.direction != Direction.DOWN:
+            self.direction = Direction.UP
+        elif ai_action == 4 and self.direction != Direction.UP:
+            self.direction = Direction.DOWN
         
         # 2. move
         self._move(self.direction) # update the head
