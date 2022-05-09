@@ -1,0 +1,9 @@
+matplotlib
+sklearn
+numpy
+PyQt5
+pyodbc
+keras
+pandas
+tensorflow
+pygame
