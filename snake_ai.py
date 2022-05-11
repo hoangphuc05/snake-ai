@@ -86,22 +86,7 @@ class SnakeGame:
                     Direction.LEFT: Direction.UP,
                     Direction.RIGHT: Direction.DOWN}
         current_event = UserAction.STRAIGHT
-        # 1. collect user input
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.direction = left_dir[self.direction]
-                    current_event = UserAction.LEFT
-                elif event.key == pygame.K_RIGHT:
-                    self.direction = right_dir[self.direction]
-                    current_event = UserAction.RIGHT
-                # elif event.key == pygame.K_UP:
-                #     self.direction = Direction.UP
-                # elif event.key == pygame.K_DOWN:
-                #     self.direction = Direction.DOWN
+        
         
         # record what happened
         # get food difference on X axis
@@ -122,14 +107,41 @@ class SnakeGame:
         # elif ai_action == 2:
         #     self.direction = left_dir[self.direction]
 
-        if ai_action == 1 and self.direction != Direction.LEFT:
-            self.direction = Direction.RIGHT
-        elif ai_action == 2 and self.direction != Direction.RIGHT:
-            self.direction = Direction.LEFT
-        elif ai_action == 3 and self.direction != Direction.DOWN:
-            self.direction = Direction.UP
-        elif ai_action == 4 and self.direction != Direction.UP:
-            self.direction = Direction.DOWN
+        if ai_action == 1:
+            if self.direction == Direction.LEFT:
+                self.direction = Direction.DOWN
+            else:
+                self.direction = Direction.RIGHT
+        elif ai_action == 2:
+            if self.direction == Direction.RIGHT:
+                self.direction = Direction.DOWN
+        
+            else:
+                self.direction = Direction.LEFT
+        elif ai_action == 3 :
+            if self.direction == Direction.DOWN:
+                self.direction = Direction.LEFT
+            else:
+                self.direction = Direction.UP
+        elif ai_action == 4:
+            if self.direction == Direction.UP:
+                self.direction = Direction.LEFT
+            else:
+                self.direction = Direction.DOWN
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    self.direction = Direction.LEFT
+                elif event.key == pygame.K_RIGHT:
+                    self.direction = Direction.RIGHT
+                elif event.key == pygame.K_UP:
+                    self.direction = Direction.UP
+                elif event.key == pygame.K_DOWN:
+                    self.direction = Direction.DOWN
         
         # 2. move
         self._move(self.direction) # update the head
@@ -341,8 +353,10 @@ if __name__ == '__main__':
         
         if game_over == True:
             break
-        
+    
     print('Final Score', score)
+
+        
         
         
     pygame.quit()

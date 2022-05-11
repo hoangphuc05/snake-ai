@@ -33,7 +33,7 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED = 5
+SPEED = 10
 
 class SnakeGame:
     
@@ -81,7 +81,6 @@ class SnakeGame:
                     Direction.LEFT: Direction.UP,
                     Direction.RIGHT: Direction.DOWN}
         # current_event = UserAction.STRAIGHT
-        current_event = None
 
         
 
@@ -93,13 +92,13 @@ class SnakeGame:
                 quit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    self.direction = left_dir[self.direction]
-                    current_event = UserAction.LEFT
+                    self.direction = Direction.LEFT
                 elif event.key == pygame.K_RIGHT:
-                    self.direction = right_dir[self.direction]
-                    current_event = UserAction.RIGHT
+                    self.direction = Direction.RIGHT
                 elif event.key == pygame.K_UP:
-                    current_event = UserAction.STRAIGHT
+                    self.direction = Direction.UP
+                elif event.key == pygame.K_DOWN:
+                    self.direction = Direction.DOWN
                 # elif event.key == pygame.K_UP:
                 #     self.direction = Direction.UP
                 # elif event.key == pygame.K_DOWN:
