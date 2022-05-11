@@ -3,6 +3,7 @@ import random
 from enum import Enum, IntEnum
 from collections import namedtuple
 import csv
+import uuid
 
 pygame.init()
 font = pygame.font.Font('arial.ttf', 25)
@@ -38,7 +39,7 @@ SPEED = 10
 class SnakeGame:
     
     def __init__(self, w=640, h=480):
-        self.csv_file_writer = csv.writer(open('snake_game_data.csv', 'w', newline=''), delimiter=',')
+        self.csv_file_writer = csv.writer(open(f'{str(uuid.uuid4())}.csv', 'w', newline=''), delimiter=',')
         self.csv_file_writer.writerow(['foodDiffX','foodDiffY','left_collision','front_collision','right_collision','direction','action'])
         self.front_collision = 0
         self.left_collision = 0
@@ -91,13 +92,13 @@ class SnakeGame:
                 pygame.quit()
                 quit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and self.direction != Direction.RIGHT:
                     self.direction = Direction.LEFT
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT and self.direction != Direction.LEFT:
                     self.direction = Direction.RIGHT
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP and self.direction != Direction.DOWN:
                     self.direction = Direction.UP
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and self.direction != Direction.UP:
                     self.direction = Direction.DOWN
                 # elif event.key == pygame.K_UP:
                 #     self.direction = Direction.UP
