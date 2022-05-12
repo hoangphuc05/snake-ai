@@ -34,12 +34,12 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED = 8
+SPEED = 15
 
 class SnakeGame:
     
     def __init__(self, w=640, h=480):
-        self.csv_file_writer = csv.writer(open(f'{str(uuid.uuid4())}.csv', 'w', newline=''), delimiter=',')
+        self.csv_file_writer = csv.writer(open(f'bot-data/{str(uuid.uuid4())}.csv', 'w', newline=''), delimiter=',')
         self.csv_file_writer.writerow(['foodDiffX','foodDiffY','left_collision','front_collision','right_collision','direction','action'])
         self.front_collision = 0
         self.left_collision = 0
@@ -86,30 +86,57 @@ class SnakeGame:
         
 
         previous_direction = self.direction
-        # 1. collect user input
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT and self.direction != Direction.RIGHT:
-                    self.direction = Direction.LEFT
-                elif event.key == pygame.K_RIGHT and self.direction != Direction.LEFT:
-                    self.direction = Direction.RIGHT
-                elif event.key == pygame.K_UP and self.direction != Direction.DOWN:
-                    self.direction = Direction.UP
-                elif event.key == pygame.K_DOWN and self.direction != Direction.UP:
-                    self.direction = Direction.DOWN
-                # elif event.key == pygame.K_UP:
-                #     self.direction = Direction.UP
-                # elif event.key == pygame.K_DOWN:
-                #     self.direction = Direction.DOWN
+
+        # automate controller
+
+
+        # # 1. collect user input
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         pygame.quit()
+        #         quit()
+        #     if event.type == pygame.KEYDOWN:
+        #         if event.key == pygame.K_LEFT and self.direction != Direction.RIGHT:
+        #             self.direction = Direction.LEFT
+        #         elif event.key == pygame.K_RIGHT and self.direction != Direction.LEFT:
+        #             self.direction = Direction.RIGHT
+        #         elif event.key == pygame.K_UP and self.direction != Direction.DOWN:
+        #             self.direction = Direction.UP
+        #         elif event.key == pygame.K_DOWN and self.direction != Direction.UP:
+        #             self.direction = Direction.DOWN
+        #         # elif event.key == pygame.K_UP:
+        #         #     self.direction = Direction.UP
+        #         # elif event.key == pygame.K_DOWN:
+        #         #     self.direction = Direction.DOWN
         
         # record what happened
         # get food difference on X axis
         food_diff_x = (self.food.x - self.head.x)/10
         # get food difference on Y axis
         food_diff_y = (self.food.y - self.head.y)/10
+
+
+        # automate playing
+        if food_diff_x < 0 and abs(food_diff_x) >= abs(food_diff_y):
+            if (self.direction == Direction.RIGHT):
+                self.direction = Direction.UP
+            else:
+                self.direction = Direction.LEFT
+        elif food_diff_x > 0 and abs(food_diff_x) >= abs(food_diff_y):
+            if (self.direction == Direction.LEFT):
+                self.direction = Direction.DOWN
+            else:
+                self.direction = Direction.RIGHT
+        elif food_diff_y < 0 and abs(food_diff_x) < abs(food_diff_y):
+            if (self.direction == Direction.DOWN):
+                self.direction = Direction.LEFT
+            else:
+                self.direction = Direction.UP
+        elif food_diff_y > 0 and abs(food_diff_x) < abs(food_diff_y):
+            if (self.direction == Direction.UP):
+                self.direction = Direction.RIGHT
+            else:
+                self.direction = Direction.DOWN
 
         # record data
         # if (current_event != None):
