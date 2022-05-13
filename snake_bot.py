@@ -40,8 +40,9 @@ class SnakeGame:
     
     def __init__(self, w=640, h=480):
         self.csv_file_writer = csv.writer(open(f'bot-data/{str(uuid.uuid4())}.csv', 'w', newline=''), delimiter=',')
-        self.csv_file_writer.writerow(['foodDiffX','foodDiffY','left_collision','front_collision','right_collision','direction','action'])
-        self.front_collision = 0
+        self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
+        self.up_collision = 0
+        self.down_collision = 0
         self.left_collision = 0
         self.right_collision = 0
 
@@ -88,26 +89,6 @@ class SnakeGame:
         previous_direction = self.direction
 
         # automate controller
-
-
-        # # 1. collect user input
-        # for event in pygame.event.get():
-        #     if event.type == pygame.QUIT:
-        #         pygame.quit()
-        #         quit()
-        #     if event.type == pygame.KEYDOWN:
-        #         if event.key == pygame.K_LEFT and self.direction != Direction.RIGHT:
-        #             self.direction = Direction.LEFT
-        #         elif event.key == pygame.K_RIGHT and self.direction != Direction.LEFT:
-        #             self.direction = Direction.RIGHT
-        #         elif event.key == pygame.K_UP and self.direction != Direction.DOWN:
-        #             self.direction = Direction.UP
-        #         elif event.key == pygame.K_DOWN and self.direction != Direction.UP:
-        #             self.direction = Direction.DOWN
-        #         # elif event.key == pygame.K_UP:
-        #         #     self.direction = Direction.UP
-        #         # elif event.key == pygame.K_DOWN:
-        #         #     self.direction = Direction.DOWN
         
         # record what happened
         # get food difference on X axis
@@ -117,32 +98,43 @@ class SnakeGame:
 
 
         # automate playing
-        if food_diff_x < 0 and abs(food_diff_x) >= abs(food_diff_y):
-            if (self.direction == Direction.RIGHT):
+        if food_diff_x < 0 and abs(food_diff_x) >= abs(food_diff_y) and self.left_collision > 0:
+            if self.direction == Direction.RIGHT:
                 self.direction = Direction.UP
             else:
                 self.direction = Direction.LEFT
-        elif food_diff_x > 0 and abs(food_diff_x) >= abs(food_diff_y):
+        elif food_diff_x > 0 and abs(food_diff_x) >= abs(food_diff_y) and self.right_collision >0:
             if (self.direction == Direction.LEFT):
                 self.direction = Direction.DOWN
             else:
                 self.direction = Direction.RIGHT
-        elif food_diff_y < 0 and abs(food_diff_x) < abs(food_diff_y):
+        elif food_diff_y < 0 and abs(food_diff_x) < abs(food_diff_y) and self.up_collision > 0:
             if (self.direction == Direction.DOWN):
                 self.direction = Direction.LEFT
             else:
                 self.direction = Direction.UP
-        elif food_diff_y > 0 and abs(food_diff_x) < abs(food_diff_y):
+        elif food_diff_y > 0 and abs(food_diff_x) < abs(food_diff_y) and self.down_collision > 0:
             if (self.direction == Direction.UP):
                 self.direction = Direction.RIGHT
             else:
                 self.direction = Direction.DOWN
 
+        # auto avoid collision
+        if self.direction == Direction.LEFT and self.left_collision <= 1:
+            self.direction = Direction.UP
+        elif self.direction == Direction.RIGHT and self.right_collision <= 1:
+            self.direction = Direction.DOWN
+        elif self.direction == Direction.UP and self.up_collision <= 1:
+            self.direction = Direction.RIGHT
+        elif self.direction == Direction.DOWN and self.down_collision <= 1:
+            self.direction = Direction.LEFT
+
+
         # record data
         # if (current_event != None):
         #     self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(current_event)])
         
-        self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(self.direction)])
+        self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(previous_direction) , int(self.direction)])
 
 
         # 2. move
@@ -237,100 +229,48 @@ class SnakeGame:
 
     # draw collision vision
     def _draw_collision_vision(self):
-        self._draw_collision_vision_front()
-        self._draw_collision_vision_right()
+        self._draw_collision_vision_up()
+        self._draw_collision_vision_down()
         self._draw_collision_vision_left()
+        self._draw_collision_vision_right()
 
-    def _draw_collision_vision_front(self):
+    def _draw_collision_vision_up(self):
         x = self.head.x
         y = self.head.y
-        self.front_collision = 0
-        if self.direction == Direction.RIGHT:
-            # x += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x += BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+        self.up_collision = 0
+        while not self._custom_collision_check(x, y):
+            y -= BLOCK_SIZE
+            self.up_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
-        elif self.direction == Direction.LEFT:
-            # x -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x -= BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.DOWN:
-            # y += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y += BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.UP:
-            # y -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y -= BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+    def _draw_collision_vision_down(self):
+        x = self.head.x
+        y = self.head.y
+        self.down_collision = 0
+        while not self._custom_collision_check(x, y):
+            y += BLOCK_SIZE
+            self.down_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
     def _draw_collision_vision_left(self):
         x = self.head.x
         y = self.head.y
         self.left_collision = 0
-        if self.direction == Direction.RIGHT:
-            # x += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y -= BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-
-        elif self.direction == Direction.LEFT:
-            # x -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y += BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.DOWN:
-            # y += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x += BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.UP:
-            # y -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x -= BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+        while not self._custom_collision_check(x, y):
+            x -= BLOCK_SIZE
+            self.left_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
     def _draw_collision_vision_right(self):
         x = self.head.x
         y = self.head.y
         self.right_collision = 0
-        if self.direction == Direction.RIGHT:
-            # x += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y += BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+        while not self._custom_collision_check(x, y):
+            x += BLOCK_SIZE
+            self.right_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
-        elif self.direction == Direction.LEFT:
-            # x -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y -= BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.DOWN:
-            # y += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x -= BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.UP:
-            # y -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x += BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        
+     
     def _move(self, direction):
         x = self.head.x
         y = self.head.y

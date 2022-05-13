@@ -39,9 +39,10 @@ SPEED = 8
 class SnakeGame:
     
     def __init__(self, w=640, h=480):
-        self.csv_file_writer = csv.writer(open(f'{str(uuid.uuid4())}.csv', 'w', newline=''), delimiter=',')
-        self.csv_file_writer.writerow(['foodDiffX','foodDiffY','left_collision','front_collision','right_collision','direction','action'])
-        self.front_collision = 0
+        self.csv_file_writer = csv.writer(open(f'player/{str(uuid.uuid4())}.csv', 'w', newline=''), delimiter=',')
+        self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
+        self.up_collision = 0
+        self.down_collision = 0
         self.left_collision = 0
         self.right_collision = 0
 
@@ -115,7 +116,8 @@ class SnakeGame:
         # if (current_event != None):
         #     self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(current_event)])
         
-        self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(self.direction)])
+        # self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(self.direction)])
+        self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(previous_direction) , int(self.direction)])
 
 
         # 2. move
@@ -209,101 +211,50 @@ class SnakeGame:
                 pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4, y + 4, 12, 12))
 
     # draw collision vision
+    # draw collision vision
     def _draw_collision_vision(self):
-        self._draw_collision_vision_front()
-        self._draw_collision_vision_right()
+        self._draw_collision_vision_up()
+        self._draw_collision_vision_down()
         self._draw_collision_vision_left()
+        self._draw_collision_vision_right()
 
-    def _draw_collision_vision_front(self):
+    def _draw_collision_vision_up(self):
         x = self.head.x
         y = self.head.y
-        self.front_collision = 0
-        if self.direction == Direction.RIGHT:
-            # x += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x += BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+        self.up_collision = 0
+        while not self._custom_collision_check(x, y):
+            y -= BLOCK_SIZE
+            self.up_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
-        elif self.direction == Direction.LEFT:
-            # x -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x -= BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.DOWN:
-            # y += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y += BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.UP:
-            # y -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y -= BLOCK_SIZE
-                self.front_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+    def _draw_collision_vision_down(self):
+        x = self.head.x
+        y = self.head.y
+        self.down_collision = 0
+        while not self._custom_collision_check(x, y):
+            y += BLOCK_SIZE
+            self.down_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
     def _draw_collision_vision_left(self):
         x = self.head.x
         y = self.head.y
         self.left_collision = 0
-        if self.direction == Direction.RIGHT:
-            # x += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y -= BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-
-        elif self.direction == Direction.LEFT:
-            # x -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y += BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.DOWN:
-            # y += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x += BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.UP:
-            # y -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x -= BLOCK_SIZE
-                self.left_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+        while not self._custom_collision_check(x, y):
+            x -= BLOCK_SIZE
+            self.left_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
     def _draw_collision_vision_right(self):
         x = self.head.x
         y = self.head.y
         self.right_collision = 0
-        if self.direction == Direction.RIGHT:
-            # x += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y += BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+        while not self._custom_collision_check(x, y):
+            x += BLOCK_SIZE
+            self.right_collision += 1
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
-        elif self.direction == Direction.LEFT:
-            # x -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                y -= BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.DOWN:
-            # y += BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x -= BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        elif self.direction == Direction.UP:
-            # y -= BLOCK_SIZE
-            while not self._custom_collision_check(x, y):
-                x += BLOCK_SIZE
-                self.right_collision += 1
-                pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
-        
+         
     def _move(self, direction):
         x = self.head.x
         y = self.head.y
