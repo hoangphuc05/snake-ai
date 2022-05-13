@@ -34,7 +34,7 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED = 15
+SPEED = 100
 
 class SnakeGame:
     
@@ -139,7 +139,19 @@ class SnakeGame:
 
         while(not checkValid()):
             # auto avoid collision
-            if self.direction == Direction.LEFT and self.left_collision <= 1:
+            config = [self.up_collision,self.down_collision,self.left_collision,self.right_collision]
+            if config.count(1) > 2:
+                index = config.index(max(config))
+                print(config, max(config), config.index(max(config)))
+                if index == 0:
+                    self.direction = Direction.UP
+                elif index == 1:
+                    self.direction = Direction.DOWN
+                elif index == 2:
+                    self.direction = Direction.LEFT
+                elif index == 3:
+                    self.direction = Direction.RIGHT
+            elif self.direction == Direction.LEFT and self.left_collision <= 1:
                 if self.up_collision <=1:
                     self.direction = Direction.DOWN
                 else: 
