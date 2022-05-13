@@ -1,7 +1,10 @@
 import os
+import uuid
 # assign directory
 directory = 'bot-data'
-merged = open('merged_data.csv','a')
+merged = open(f'merged_data/{str(uuid.uuid4())}.csv', 'w', newline='')
+merged.write("foodDiffX,foodDiffY,up_collision,down_collision,left_collision,right_collision,direction,action")
+
 # iterate over files in
 # that directory
 files = []
@@ -11,7 +14,6 @@ for filename in os.listdir(directory):
     # checking if it is a file
     if os.path.isfile(f):
         files.append(f)
-print(files)
 
 if len(files)!=0:
     for file in files:
@@ -26,6 +28,7 @@ if len(files)!=0:
                 merged.write(line)
         f.close()
         os.remove(file)
+merged.close()
 
 
         
