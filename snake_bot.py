@@ -39,7 +39,8 @@ SPEED = 15
 class SnakeGame:
     
     def __init__(self, w=640, h=480):
-        self.csv_file_writer = csv.writer(open(f'bot-data/{str(uuid.uuid4())}.csv', 'w', newline=''), delimiter=',')
+        self.csv_file = open(f'bot-data/{str(uuid.uuid4())}.csv', 'w', newline='')
+        self.csv_file_writer = csv.writer(self.csv_file, delimiter=',')
         self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
         self.up_collision = 0
         self.down_collision = 0
@@ -87,6 +88,10 @@ class SnakeGame:
         
 
         previous_direction = self.direction
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
 
         # automate controller
         
@@ -118,16 +123,42 @@ class SnakeGame:
                 self.direction = Direction.RIGHT
             else:
                 self.direction = Direction.DOWN
+                
+        def checkValid():
+            if self.up_collision == 0 and self.down_collision == 0 and self.right_collision == 0 and self.left_collision == 0:
+                return True
+            if self.direction == Direction.LEFT and self.left_collision <= 1:
+                return False
+            elif self.direction == Direction.RIGHT and self.right_collision <= 1:
+                return False
+            elif self.direction == Direction.UP and self.up_collision <= 1:
+                return False
+            elif self.direction == Direction.DOWN and self.down_collision <= 1:
+                return False
+            return True
 
-        # auto avoid collision
-        if self.direction == Direction.LEFT and self.left_collision <= 1:
-            self.direction = Direction.UP
-        elif self.direction == Direction.RIGHT and self.right_collision <= 1:
-            self.direction = Direction.DOWN
-        elif self.direction == Direction.UP and self.up_collision <= 1:
-            self.direction = Direction.RIGHT
-        elif self.direction == Direction.DOWN and self.down_collision <= 1:
-            self.direction = Direction.LEFT
+        while(not checkValid()):
+            # auto avoid collision
+            if self.direction == Direction.LEFT and self.left_collision <= 1:
+                if self.up_collision <=1:
+                    self.direction = Direction.DOWN
+                else: 
+                    self.direction = Direction.UP
+            elif self.direction == Direction.RIGHT and self.right_collision <= 1:
+                if self.down_collision <=1:
+                    self.direction = Direction.UP
+                else:
+                    self.direction = Direction.DOWN
+            elif self.direction == Direction.UP and self.up_collision <= 1:
+                if self.right_collision <=1 :
+                    self.direction = Direction.LEFT
+                else:
+                    self.direction = Direction.RIGHT
+            elif self.direction == Direction.DOWN and self.down_collision <= 1:
+                if self.left_collision <= 1:
+                    self.direction = Direction.RIGHT
+                else:
+                    self.direction = Direction.LEFT
 
 
         # record data
@@ -135,7 +166,7 @@ class SnakeGame:
         #     self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(current_event)])
         
         self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(previous_direction) , int(self.direction)])
-
+        self.csv_file.flush()
 
         # 2. move
         self._move(self.direction) # update the head
