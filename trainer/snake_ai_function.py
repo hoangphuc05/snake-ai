@@ -7,11 +7,7 @@ import csv
 from tensorflow import keras
 import pandas as pd
 import numpy as np
-
-
-pygame.init()
-font = pygame.font.Font('arial.ttf', 25)
-#font = pygame.font.SysFont('arial', 25)
+from multiprocessing import Process
 
 class Direction(IntEnum):
     RIGHT = 1
@@ -23,8 +19,6 @@ class UserAction(IntEnum):
     RIGHT = 1
     LEFT = 2
     STRAIGHT = 3
-    
-Point = namedtuple('Point', 'x, y')
 
 # rgb colors
 WHITE = (255, 255, 255)
@@ -38,12 +32,17 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED = 5
+SPEED = 135
+
+
+Point = namedtuple('Point', 'x, y')
+
 
 class SnakeGame:
     
-    def __init__(self, w=640, h=480):
-        self.model = keras.models.load_model('first_model.h5')
+    def __init__(self, model_path, w=640, h=480):
+        self.font = pygame.font.Font('arial.ttf', 25)
+        self.model = keras.models.load_model(model_path)
         
         self.up_collision = 0
         self.down_collision = 0
@@ -91,18 +90,16 @@ class SnakeGame:
         
         # record what happened
         # get food difference on X axis
-        food_diff_x = (self.food.x - self.head.x)/10
+        food_diff_x = (self.food.x - self.head.x)/20
         # get food difference on Y axis
-        food_diff_y = (self.food.y - self.head.y)/10
+        food_diff_y = (self.food.y - self.head.y)/20
 
         # make action
         # kera_input = keras.Input()
         snake_list = [food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(self.direction)]
 
         ai_action_array = self.model.predict( pd.DataFrame([snake_list]) )
-        print("Action array: ", ai_action_array)
         ai_action = ai_action_array.argmax() + 1
-        print("Action: ", ai_action)
         # if ai_action == 1:
         #     self.direction = right_dir[self.direction]
         # elif ai_action == 2:
@@ -204,7 +201,7 @@ class SnakeGame:
             
         pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
         
-        text = font.render("Score: " + str(self.score), True, WHITE)
+        text = self.font.render("Score: " + str(self.score), True, WHITE)
         self.display.blit(text, [0, 0])
         pygame.display.flip()
 
@@ -292,22 +289,48 @@ class SnakeGame:
             y -= BLOCK_SIZE
             
         self.head = Point(x, y)
-            
 
-if __name__ == '__main__':
-    for i in range(2):
-        game = SnakeGame()
-        
+class SnakeAI:
+    def __init__(self, model_path):
+        self.model_path = model_path
+
+    def play_game(self,game:SnakeGame, i:int) -> int:
+        # print("Path: " ,self.model_path + "_" + str(i) + ".h5")
+        # game = SnakeGame(self.model_path + "_" + str(i) + ".h5")
+    
         # game loop
         while True:
             game_over, score = game.play_step()
             
             if game_over == True:
                 break
-        
-        print('Final Score', score)
+        # record the score
+        self.score_arr[i] = score
+        return score
 
-        
-        
-        
-    # pygame.quit()
+    def ai_play(self, game_count:int=5):
+        game_count = int(game_count)    
+        process_arr = []
+        self.score_arr = [0] * game_count
+
+        for i in range(game_count):
+            # create array to store process
+            pygame.init()
+            game = SnakeGame(self.model_path)
+            self.score_arr[i] = self.play_game(game, i)
+            pygame.quit()
+
+        # for process in process_arr:
+        #     process.join()
+    def get_average(self):
+        return sum(self.score_arr) / len(self.score_arr)
+    
+    def end():
+        pygame.quit()
+
+
+
+if __name__ == '__main__':
+    AI = SnakeAI(model_path='first_model.h5')
+    AI.ai_play(game_count=2)
+    print(AI.get_average())

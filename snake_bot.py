@@ -34,7 +34,7 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED = 15
+SPEED = 30
 
 class SnakeGame:
     
