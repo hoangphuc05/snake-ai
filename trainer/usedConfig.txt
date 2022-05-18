@@ -1,0 +1,38 @@
+layer1 = 16
+layer2 = 32
+layer3 = 64 
+layer4 = 16
+l1Activation = ['sigmoid', 'relu', 'elu']
+l2Activation = ['sigmoid', 'relu', 'elu']
+l3Activation = ['sigmoid', 'relu', 'elu']
+l4Activation = ['sigmoid', 'relu', 'elu']
+fileSave = ['sigm-16-32-64-16-bot2.h5', 'relu-16-32-64-16-bot2.h5', 'elu-16-32-64-16-bot2.h5']
+
+layer1 = 16
+layer2 = 32
+layer3 = 64 
+layer4 = 16
+l1Activation = ['sigmoid','sigmoid','sigmoid','relu','sigmoid','sigmoid','sigmoid','elu','relu','relu','relu','elu','relu','relu','relu','sigmoid',]
+l2Activation = ['relu','sigmoid','sigmoid','sigmoid','elu','sigmoid','sigmoid','sigmoid','elu','relu','relu','relu','sigmoid','relu','relu','relu',]
+l3Activation = ['sigmoid','relu','sigmoid','sigmoid','sigmoid','elu','sigmoid','sigmoid','relu','elu','relu','relu','relu','sigmoid','relu','relu',]
+l4Activation = ['sigmoid','sigmoid','relu','sigmoid','sigmoid','sigmoid','elu','sigmoid','relu','relu','elu','relu','relu','relu','sigmoid','relu',]
+fileSave = ['srss-16-32-64-16-bot2.h5', 'ssrs-16-32-64-16-bot2.h5', 'sssr-16-32-64-16-bot2.h5', 'rsss-16-32-64-16-bot2.h5', 
+            'sess-16-32-64-16-bot2.h5', 'sses-16-32-64-16-bot2.h5', 'ssse-16-32-64-16-bot2.h5', 'esss-16-32-64-16-bot2.h5', 
+            'rerr-16-32-64-16-bot2.h5', 'rrer-16-32-64-16-bot2.h5', 'rrre-16-32-64-16-bot2.h5', 'errr-16-32-64-16-bot2.h5', 
+            'rsrr-16-32-64-16-bot2.h5', 'rrsr-16-32-64-16-bot2.h5', 'rrrs-16-32-64-16-bot2.h5', 'srrr-16-32-64-16-bot2.h5', 
+            ]
+
+
+layer1 = 16
+layer2 = 32
+layer3 = 64 
+layer4 = 16
+l1Activation = ['relu','relu','sigmoid','sigmoid','elu','elu','sigmoid','sigmoid','relu','relu','elu','elu']
+l2Activation = ['sigmoid','relu','relu','sigmoid','sigmoid','elu','elu','sigmoid','elu','relu','relu','elu']
+l3Activation = ['relu','sigmoid','relu','relu','elu','sigmoid','elu','elu','relu','elu','relu','relu']
+l4Activation = ['sigmoid','sigmoid','sigmoid','relu','sigmoid','sigmoid','sigmoid','elu','elu','elu','elu','relu']
+fileSave = ['rsrs-16-32-64-16-bot2.h5', 'rrss-16-32-64-16-bot2.h5', 'srrs-16-32-64-16-bot2.h5', 'ssrr-16-32-64-16-bot2.h5', 
+            'eses-16-32-64-16-bot2.h5', 'eess-16-32-64-16-bot2.h5', 'sees-16-32-64-16-bot2.h5', 'ssee-16-32-64-16-bot2.h5', 
+            'rere-16-32-64-16-bot2.h5', 'rree-16-32-64-16-bot2.h5', 'erre-16-32-64-16-bot2.h5', 'eerr-16-32-64-16-bot2.h5', 
+            ]
+

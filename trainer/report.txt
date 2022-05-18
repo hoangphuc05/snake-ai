@@ -1,0 +1,248 @@
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, sigmoid, sigmoid, sigmoid
+[[16,sigmoid], [32,sigmoid] , [64,sigmoid], [16,sigmoid]]
+Average Score: 18.6 | Average Accuracy: 0.9419233095645905
+Output as file: sigm-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, relu, relu, relu
+[[16,relu], [32,relu] , [64,relu], [16,relu]]
+Average Score: 40.2 | Average Accuracy: 0.9946932236353556
+Output as file: relu-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: elu, elu, elu, elu
+[[16,elu], [32,elu] , [64,elu], [16,elu]]
+Average Score: 20.4 | Average Accuracy: 0.9940279444058736
+Output as file: elu-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, sigmoid, relu, sigmoid
+[[16,relu], [32,sigmoid] , [64,relu], [16,sigmoid]]
+Average Score: 36.0 | Average Accuracy: 0.9884296830495198
+Output as file: rsrs-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, relu, sigmoid, sigmoid
+[[16,relu], [32,relu] , [64,sigmoid], [16,sigmoid]]
+Average Score: 29.4 | Average Accuracy: 0.9909705221652985
+Output as file: rrss-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, relu, relu, sigmoid
+[[16,sigmoid], [32,relu] , [64,relu], [16,sigmoid]]
+Average Score: 31.6 | Average Accuracy: 0.9830060362815857
+Output as file: srrs-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, sigmoid, relu, relu
+[[16,sigmoid], [32,sigmoid] , [64,relu], [16,relu]]
+Average Score: 35.6 | Average Accuracy: 0.991387062072754
+Output as file: ssrr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: elu, sigmoid, elu, sigmoid
+[[16,elu], [32,sigmoid] , [64,elu], [16,sigmoid]]
+Average Score: 27.4 | Average Accuracy: 0.9885206266244253
+Output as file: eses-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: elu, elu, sigmoid, sigmoid
+[[16,elu], [32,elu] , [64,sigmoid], [16,sigmoid]]
+Average Score: 28.6 | Average Accuracy: 0.9830080819129944
+Output as file: eess-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, elu, elu, sigmoid
+[[16,sigmoid], [32,elu] , [64,elu], [16,sigmoid]]
+Average Score: 26.6 | Average Accuracy: 0.9874706407388051
+Output as file: sees-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, sigmoid, elu, elu
+[[16,sigmoid], [32,sigmoid] , [64,elu], [16,elu]]
+Average Score: 33.6 | Average Accuracy: 0.9845298612117768
+Output as file: ssee-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, elu, relu, elu
+[[16,relu], [32,elu] , [64,relu], [16,elu]]
+Average Score: 24.8 | Average Accuracy: 0.9949201369285583
+Output as file: rere-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, relu, elu, elu
+[[16,relu], [32,relu] , [64,elu], [16,elu]]
+Average Score: 44.0 | Average Accuracy: 0.9962641108036041
+Output as file: rree-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: elu, relu, relu, elu
+[[16,elu], [32,relu] , [64,relu], [16,elu]]
+Average Score: 39.2 | Average Accuracy: 0.9952382250626882
+Output as file: erre-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: elu, elu, relu, relu
+[[16,elu], [32,elu] , [64,relu], [16,relu]]
+Average Score: 30.4 | Average Accuracy: 0.9949787978331248
+Output as file: eerr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, relu, sigmoid, sigmoid
+[[16,sigmoid], [32,relu] , [64,sigmoid], [16,sigmoid]]
+Average Score: 21.8 | Average Accuracy: 0.988189126253128
+Output as file: srss-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, sigmoid, relu, sigmoid
+[[16,sigmoid], [32,sigmoid] , [64,relu], [16,sigmoid]]
+Average Score: 25.0 | Average Accuracy: 0.9781187538305919
+Output as file: ssrs-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, sigmoid, sigmoid, relu
+[[16,sigmoid], [32,sigmoid] , [64,sigmoid], [16,relu]]
+Average Score: 33.4 | Average Accuracy: 0.9822836860020956
+Output as file: sssr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, sigmoid, sigmoid, sigmoid
+[[16,relu], [32,sigmoid] , [64,sigmoid], [16,sigmoid]]
+Average Score: 34.0 | Average Accuracy: 0.9842476936181387
+Output as file: rsss-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, elu, sigmoid, sigmoid
+[[16,sigmoid], [32,elu] , [64,sigmoid], [16,sigmoid]]
+Average Score: 29.2 | Average Accuracy: 0.980837398370107
+Output as file: sess-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, sigmoid, elu, sigmoid
+[[16,sigmoid], [32,sigmoid] , [64,elu], [16,sigmoid]]
+Average Score: 39.4 | Average Accuracy: 0.9865952746073405
+Output as file: sses-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, sigmoid, sigmoid, elu
+[[16,sigmoid], [32,sigmoid] , [64,sigmoid], [16,elu]]
+Average Score: 31.2 | Average Accuracy: 0.9783331644535065
+Output as file: ssse-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: elu, sigmoid, sigmoid, sigmoid
+[[16,elu], [32,sigmoid] , [64,sigmoid], [16,sigmoid]]
+Average Score: 43.0 | Average Accuracy: 0.9805070308844248
+Output as file: esss-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, elu, relu, relu
+[[16,relu], [32,elu] , [64,relu], [16,relu]]
+Average Score: 20.8 | Average Accuracy: 0.9951095366477967
+Output as file: rerr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, relu, elu, relu
+[[16,relu], [32,relu] , [64,elu], [16,relu]]
+Average Score: 41.2 | Average Accuracy: 0.9946518437067667
+Output as file: rrer-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, relu, relu, elu
+[[16,relu], [32,relu] , [64,relu], [16,elu]]
+Average Score: 36.0 | Average Accuracy: 0.9929597647984822
+Output as file: rrre-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: elu, relu, relu, relu
+[[16,elu], [32,relu] , [64,relu], [16,relu]]
+Average Score: 42.0 | Average Accuracy: 0.9960985859235127
+Output as file: errr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, sigmoid, relu, relu
+[[16,relu], [32,sigmoid] , [64,relu], [16,relu]]
+Average Score: 30.0 | Average Accuracy: 0.9814667534828186
+Output as file: rsrr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, relu, sigmoid, relu
+[[16,relu], [32,relu] , [64,sigmoid], [16,relu]]
+Average Score: 33.6 | Average Accuracy: 0.9868199137846628
+Output as file: rrsr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: relu, relu, relu, sigmoid
+[[16,relu], [32,relu] , [64,relu], [16,sigmoid]]
+Average Score: 30.8 | Average Accuracy: 0.9931421180566152
+Output as file: rrrs-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 4 layers w/ following layers and activation functions: 
+Layers: 16 32 64 16
+Activation: sigmoid, relu, relu, relu
+[[16,sigmoid], [32,relu] , [64,relu], [16,relu]]
+Average Score: 25.0 | Average Accuracy: 0.9875368042786916
+Output as file: srrr-16-32-64-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
