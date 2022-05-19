@@ -34,19 +34,21 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED = 100
+SPEED = 300
+SNAKE_LENGTH = 30
 
 class SnakeGame:
     
     def __init__(self, w=640, h=480):
-        self.csv_file = open(f'bot-data/{str(uuid.uuid4())}.csv', 'w', newline='')
+        # self.csv_file = open(f'bot-data/{str(uuid.uuid4())}.csv', 'w', newline='')
+        self.csv_file = open(f'bot-1.csv', 'a', newline='')
         self.csv_file_writer = csv.writer(self.csv_file, delimiter=',')
-        self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
+        # self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
         self.up_collision = 0
         self.down_collision = 0
         self.left_collision = 0
         self.right_collision = 0
-
+        self.step_count = 0
         self.w = w
         self.h = h
         # init display
@@ -58,10 +60,12 @@ class SnakeGame:
         self.direction = Direction.RIGHT
         
         self.head = Point(self.w/2, self.h/2)
-        self.snake = [self.head, 
-                      Point(self.head.x-BLOCK_SIZE, self.head.y),
-                      Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
-        
+        # self.snake = [self.head, 
+        #               Point(self.head.x-BLOCK_SIZE, self.head.y),
+        #               Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
+        self.snake = [self.head]
+        for i in range(1,SNAKE_LENGTH +1):
+            self.snake.append(Point(self.head.x, self.head.y + (i*BLOCK_SIZE)))
         self.score = 0
         self.food = None
         self._place_food()
@@ -138,6 +142,22 @@ class SnakeGame:
             return True
 
         while(not checkValid()):
+            self.step_count+=1
+            config = [self.up_collision,self.down_collision,self.left_collision,self.right_collision]
+            if config.count(1) > 2:
+                index = config.index(max(config))
+                print("Step counter:",self.step_count, config, max(config), config.index(max(config)), "Score:", self.score)
+                if config == [1,1,1,1]:
+                    self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(previous_direction) , int(self.direction)])
+                    exit()
+                if index == 0:
+                    self.direction = Direction.UP
+                elif index == 1:
+                    self.direction = Direction.DOWN
+                elif index == 2:
+                    self.direction = Direction.LEFT
+                elif index == 3:
+                    self.direction = Direction.RIGHT
             # auto avoid collision
             config = [self.up_collision,self.down_collision,self.left_collision,self.right_collision]
             if config.count(1) > 2:
