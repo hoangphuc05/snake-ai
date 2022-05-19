@@ -9,7 +9,7 @@ class CustomTrainer():
     def __init__(self) -> None:
         pass
     
-    def train(self, data_path: str, save_path:str, config: List[List]) -> None:
+    def train(self, data_path: str, save_path:str, start_activation, end_acttivation, config: List[List]) -> None:
         data = pd.read_csv(data_path)
 
         # remove special character
@@ -20,14 +20,14 @@ class CustomTrainer():
         
         model = Sequential()
         # add first layer
-        model.add(Dense(7, input_dim=7, activation='sigmoid'))
+        model.add(Dense(7, input_dim=7, activation=start_activation))
         # model.add(Conv1D(7, 4, input_shape=(20, 1,7), activation='relu'))
 
         for layer in config:
             model.add(Dense(int(layer[0]), activation=layer[1]))
     
         # final layer
-        model.add(Dense(4, activation='sigmoid'))
+        model.add(Dense(4, activation=end_acttivation))
 
         # combine the Keras model
         model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])

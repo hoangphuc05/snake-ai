@@ -1,13 +1,13 @@
-
 import pygame
 import random
 from enum import Enum, IntEnum
 from collections import namedtuple
 import csv
-from tensorflow import keras
-import pandas as pd
-import numpy as np
-from multiprocessing import Process
+import uuid
+
+pygame.init()
+font = pygame.font.Font('arial.ttf', 25)
+#font = pygame.font.SysFont('arial', 25)
 
 class Direction(IntEnum):
     RIGHT = 1
@@ -19,6 +19,8 @@ class UserAction(IntEnum):
     RIGHT = 1
     LEFT = 2
     STRAIGHT = 3
+    
+Point = namedtuple('Point', 'x, y')
 
 # rgb colors
 WHITE = (255, 255, 255)
@@ -32,23 +34,24 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED = 135
-
-
-Point = namedtuple('Point', 'x, y')
-
+SPEED =50
+SNAKE_LENGTH = 6
 
 class SnakeGame:
     
-    def __init__(self, model_path, w=1000, h=480):
+    def __init__(self, w=1000, h=480):
         self.x_border_offset = 0
-        self.font = pygame.font.Font('arial.ttf', 25)
-        self.model = keras.models.load_model(model_path)
-        
+        # self.csv_file = open(f'bot-data-2/{str(uuid.uuid4())}.csv', 'a', newline='')
+        self.csv_file = open(f'bot-2-moving.csv', 'w', newline='')
+
+        self.csv_file_writer = csv.writer(self.csv_file, delimiter=',')
+        # self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
         self.up_collision = 0
         self.down_collision = 0
         self.left_collision = 0
         self.right_collision = 0
+        self.step_count=0
+
 
         self.w = w
         self.h = h
@@ -61,9 +64,12 @@ class SnakeGame:
         self.direction = Direction.RIGHT
         
         self.head = Point(self.w/2, self.h/2)
-        self.snake = [self.head, 
-                      Point(self.head.x-BLOCK_SIZE, self.head.y),
-                      Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
+        # self.snake = [self.head, 
+        #               Point(self.head.x-BLOCK_SIZE, self.head.y),
+        #               Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
+        self.snake = [self.head]
+        for i in range(1,SNAKE_LENGTH +1):
+            self.snake.append(Point(self.head.x, self.head.y + (i*BLOCK_SIZE)))
         
         self.score = 0
         self.food = None
@@ -73,6 +79,7 @@ class SnakeGame:
         x = random.randint((self.x_border_offset + 100)//BLOCK_SIZE, (((self.w)+self.x_border_offset)//BLOCK_SIZE ) )*BLOCK_SIZE 
         y = random.randint(0, (self.h-BLOCK_SIZE )//BLOCK_SIZE )*BLOCK_SIZE
         self.food = Point(x, y)
+        print("Food: ", self.food.x, ", ", self.food.y)
         if self.food in self.snake or self.food.x <= self.x_border_offset:
             self._place_food()
         
@@ -86,8 +93,17 @@ class SnakeGame:
                     Direction.DOWN: Direction.LEFT,
                     Direction.LEFT: Direction.UP,
                     Direction.RIGHT: Direction.DOWN}
-        current_event = UserAction.STRAIGHT
+        # current_event = UserAction.STRAIGHT
+
         
+
+        previous_direction = self.direction
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        # automate controller
         
         # record what happened
         # get food difference on X axis
@@ -95,53 +111,101 @@ class SnakeGame:
         # get food difference on Y axis
         food_diff_y = (self.food.y - self.head.y)/20
 
-        # make action
-        # kera_input = keras.Input()
-        snake_list = [food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(self.direction)]
 
-        ai_action_array = self.model.predict( pd.DataFrame([snake_list]) )
-        ai_action = ai_action_array.argmax() + 1
-        # if ai_action == 1:
-        #     self.direction = right_dir[self.direction]
-        # elif ai_action == 2:
-        #     self.direction = left_dir[self.direction]
-
-        if ai_action == 1:
-            if self.direction == Direction.LEFT:
-                self.direction = Direction.DOWN
+        # automate playing
+        if food_diff_x < 0 and self.left_collision > 0:
+            if self.direction == Direction.RIGHT:
+                if food_diff_y < 0:
+                    self.direction = Direction.UP
+                else:
+                    self.direction = Direction.DOWN
+            else:
+                self.direction = Direction.LEFT
+        elif food_diff_x > 0 and self.right_collision >0:
+            if (self.direction == Direction.LEFT):
+                if food_diff_y < 0:
+                    self.direction = Direction.UP
+                else:
+                    self.direction = Direction.DOWN
             else:
                 self.direction = Direction.RIGHT
-        elif ai_action == 2:
-            if self.direction == Direction.RIGHT:
-                self.direction = Direction.DOWN
-        
-            else:
-                self.direction = Direction.LEFT
-        elif ai_action == 3 :
-            if self.direction == Direction.DOWN:
-                self.direction = Direction.LEFT
+        elif food_diff_y < 0 and self.up_collision > 0:
+            if (self.direction == Direction.DOWN):
+                if (food_diff_x < 0):
+                    self.direction = Direction.LEFT
+                else:
+                    self.direction = Direction.RIGHT
             else:
                 self.direction = Direction.UP
-        elif ai_action == 4:
-            if self.direction == Direction.UP:
-                self.direction = Direction.LEFT
+        elif food_diff_y > 0  and self.down_collision > 0:
+            if (self.direction == Direction.UP):
+                if (food_diff_x < 0):
+                    self.direction = Direction.LEFT
+                else:
+                    self.direction = Direction.RIGHT
             else:
                 self.direction = Direction.DOWN
+                
+        def checkValid():
+            if self.up_collision == 0 and self.down_collision == 0 and self.right_collision == 0 and self.left_collision == 0:
+                return True
+            if self.direction == Direction.LEFT and self.left_collision <= 1:
+                return False
+            elif self.direction == Direction.RIGHT and self.right_collision <= 1:
+                return False
+            elif self.direction == Direction.UP and self.up_collision <= 1:
+                return False
+            elif self.direction == Direction.DOWN and self.down_collision <= 1:
+                return False
+            return True
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.direction = Direction.LEFT
-                elif event.key == pygame.K_RIGHT:
-                    self.direction = Direction.RIGHT
-                elif event.key == pygame.K_UP:
+        while(not checkValid()):
+            self.step_count+=1
+            config = [self.up_collision,self.down_collision,self.left_collision,self.right_collision]
+            if config.count(1) > 2:
+                index = config.index(max(config))
+                # print("Step counter:",self.step_count, config, max(config), config.index(max(config)), "Score:", self.score)
+                if config == [1,1,1,1]:
+                    self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(previous_direction) , int(self.direction)])
+                    exit()
+                if index == 0:
                     self.direction = Direction.UP
-                elif event.key == pygame.K_DOWN:
+                elif index == 1:
                     self.direction = Direction.DOWN
+                elif index == 2:
+                    self.direction = Direction.LEFT
+                elif index == 3:
+                    self.direction = Direction.RIGHT
+            # auto avoid collision
+            if self.direction == Direction.LEFT and self.left_collision <= 1:
+                if self.up_collision <=1:
+                    self.direction = Direction.DOWN
+                else: 
+                    self.direction = Direction.UP
+            elif self.direction == Direction.RIGHT and self.right_collision <= 1:
+                if self.down_collision <=1:
+                    self.direction = Direction.UP
+                else:
+                    self.direction = Direction.DOWN
+            elif self.direction == Direction.UP and self.up_collision <= 1:
+                if self.right_collision <=1 :
+                    self.direction = Direction.LEFT
+                else:
+                    self.direction = Direction.RIGHT
+            elif self.direction == Direction.DOWN and self.down_collision <= 1:
+                if self.left_collision <= 1:
+                    self.direction = Direction.RIGHT
+                else:
+                    self.direction = Direction.LEFT
+
+
+        # record data
+        # if (current_event != None):
+        #     self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.left_collision, self.front_collision, self.right_collision, int(previous_direction) , int(current_event)])
         
+        self.csv_file_writer.writerow([food_diff_x, food_diff_y, self.up_collision, self.down_collision, self.left_collision, self.right_collision, int(previous_direction) , int(self.direction)])
+        self.csv_file.flush()
+
         # 2. move
         self._move(self.direction) # update the head
         self.snake.insert(0, self.head)
@@ -204,7 +268,7 @@ class SnakeGame:
             
         pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x - self.x_border_offset, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
         
-        text = self.font.render("Score: " + str(self.score), True, WHITE)
+        text = font.render("Score: " + str(self.score), True, WHITE)
         self.display.blit(text, [0, 0])
         pygame.display.flip()
 
@@ -238,7 +302,6 @@ class SnakeGame:
                 pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
 
     # draw collision vision
-# draw collision vision
     def _draw_collision_vision(self):
         self._draw_collision_vision_up()
         self._draw_collision_vision_down()
@@ -281,7 +344,7 @@ class SnakeGame:
             self.right_collision += 1
             pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
 
-       
+     
     def _move(self, direction):
         x = self.head.x
         y = self.head.y
@@ -295,48 +358,19 @@ class SnakeGame:
             y -= BLOCK_SIZE
             
         self.head = Point(x, y)
-
-class SnakeAI:
-    def __init__(self, model_path):
-        self.model_path = model_path
-
-    def play_game(self,game:SnakeGame, i:int) -> int:
-        # print("Path: " ,self.model_path + "_" + str(i) + ".h5")
-        # game = SnakeGame(self.model_path + "_" + str(i) + ".h5")
-    
-        # game loop
-        while True:
-            game_over, score = game.play_step()
             
-            if game_over == True:
-                break
-        # record the score
-        self.score_arr[i] = score
-        return score
-
-    def ai_play(self, game_count:int=5):
-        game_count = int(game_count)    
-        process_arr = []
-        self.score_arr = [0] * game_count
-
-        for i in range(game_count):
-            # create array to store process
-            pygame.init()
-            game = SnakeGame(self.model_path)
-            self.score_arr[i] = self.play_game(game, i)
-            pygame.quit()
-
-        # for process in process_arr:
-        #     process.join()
-    def get_average(self):
-        return sum(self.score_arr) / len(self.score_arr)
-    
-    def end():
-        pygame.quit()
-
-
 
 if __name__ == '__main__':
-    AI = SnakeAI(model_path='first_model.h5')
-    AI.ai_play(game_count=2)
-    print(AI.get_average())
+    game = SnakeGame()
+    
+    # game loop
+    while True:
+        game_over, score = game.play_step()
+        
+        if game_over == True:
+            break
+        
+    print('Final Score', score)
+        
+        
+    pygame.quit()

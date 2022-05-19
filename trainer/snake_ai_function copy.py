@@ -40,8 +40,7 @@ Point = namedtuple('Point', 'x, y')
 
 class SnakeGame:
     
-    def __init__(self, model_path, w=1000, h=480):
-        self.x_border_offset = 0
+    def __init__(self, model_path, w=640, h=480):
         self.font = pygame.font.Font('arial.ttf', 25)
         self.model = keras.models.load_model(model_path)
         
@@ -70,10 +69,10 @@ class SnakeGame:
         self._place_food()
         
     def _place_food(self):
-        x = random.randint((self.x_border_offset + 100)//BLOCK_SIZE, (((self.w)+self.x_border_offset)//BLOCK_SIZE ) )*BLOCK_SIZE 
+        x = random.randint(0, (self.w-BLOCK_SIZE )//BLOCK_SIZE )*BLOCK_SIZE 
         y = random.randint(0, (self.h-BLOCK_SIZE )//BLOCK_SIZE )*BLOCK_SIZE
         self.food = Point(x, y)
-        if self.food in self.snake or self.food.x <= self.x_border_offset:
+        if self.food in self.snake:
             self._place_food()
         
     def play_step(self):
@@ -171,7 +170,7 @@ class SnakeGame:
     
     def _is_collision(self):
         # hits boundary
-        if self.head.x > self.w + self.x_border_offset - BLOCK_SIZE or self.head.x < self.x_border_offset or self.head.y > self.h - BLOCK_SIZE or self.head.y < 0:
+        if self.head.x > self.w - BLOCK_SIZE or self.head.x < 0 or self.head.y > self.h - BLOCK_SIZE or self.head.y < 0:
             return True
         # hits itself
         if self.head in self.snake[1:]:
@@ -180,7 +179,7 @@ class SnakeGame:
         return False
     
     def _custom_collision_check(self, x, y):
-        if x > self.w + self.x_border_offset - BLOCK_SIZE or x < self.x_border_offset or y > self.h - BLOCK_SIZE or y < 0:
+        if x > self.w - BLOCK_SIZE or x < 0 or y > self.h - BLOCK_SIZE or y < 0:
             return True
         if Point(x,y) in self.snake[1:]:
             return True
@@ -194,23 +193,18 @@ class SnakeGame:
         return False
 
     def _update_ui(self):
-        self.x_border_offset += 5
         self.display.fill(GREY)
-        self._check_food_valid()
         self._draw_collision_vision()
         for pt in self.snake:
-            pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x - self.x_border_offset, pt.y, BLOCK_SIZE, BLOCK_SIZE))
-            pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x+4 - self.x_border_offset, pt.y+4, 12, 12))
+            pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
+            pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x+4, pt.y+4, 12, 12))
             
-        pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x - self.x_border_offset, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
+        pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
         
         text = self.font.render("Score: " + str(self.score), True, WHITE)
         self.display.blit(text, [0, 0])
         pygame.display.flip()
 
-    def _check_food_valid(self):
-        if self.food.x <= self.x_border_offset + 30:
-            self._place_food()
     
     def _draw_food_vision_front(self):
         x = self.head.x
@@ -219,23 +213,23 @@ class SnakeGame:
             # x += BLOCK_SIZE
             while not self._custom_food_check(x, y):
                 x += BLOCK_SIZE
-                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4, y + 4, 12, 12))
 
         elif self.direction == Direction.LEFT:
             # x -= BLOCK_SIZE
             while not self._custom_food_check(x, y):
                 x -= BLOCK_SIZE
-                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4, y + 4, 12, 12))
         elif self.direction == Direction.DOWN:
             # y += BLOCK_SIZE
             while not self._custom_food_check(x, y):
                 y += BLOCK_SIZE
-                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4, y + 4, 12, 12))
         elif self.direction == Direction.UP:
             # y -= BLOCK_SIZE
             while not self._custom_food_check(x, y):
                 y -= BLOCK_SIZE
-                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+                pygame.draw.rect(self.display, VISION_GREEN, pygame.Rect(x + 4, y + 4, 12, 12))
 
     # draw collision vision
 # draw collision vision
@@ -252,7 +246,7 @@ class SnakeGame:
         while not self._custom_collision_check(x, y):
             y -= BLOCK_SIZE
             self.up_collision += 1
-            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
     def _draw_collision_vision_down(self):
         x = self.head.x
@@ -261,7 +255,7 @@ class SnakeGame:
         while not self._custom_collision_check(x, y):
             y += BLOCK_SIZE
             self.down_collision += 1
-            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
     def _draw_collision_vision_left(self):
         x = self.head.x
@@ -270,7 +264,7 @@ class SnakeGame:
         while not self._custom_collision_check(x, y):
             x -= BLOCK_SIZE
             self.left_collision += 1
-            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
     def _draw_collision_vision_right(self):
         x = self.head.x
@@ -279,7 +273,7 @@ class SnakeGame:
         while not self._custom_collision_check(x, y):
             x += BLOCK_SIZE
             self.right_collision += 1
-            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4 - self.x_border_offset, y + 4, 12, 12))
+            pygame.draw.rect(self.display, VISION_GREY, pygame.Rect(x + 4, y + 4, 12, 12))
 
        
     def _move(self, direction):

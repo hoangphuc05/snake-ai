@@ -34,14 +34,17 @@ VISION_GREY = (142,146,151)
 VISION_GREEN = (154, 162, 90)
 
 BLOCK_SIZE = 20
-SPEED =35
+SPEED =300
+SNAKE_LENGTH = 30
 
 class SnakeGame:
     
     def __init__(self, w=640, h=480):
-        self.csv_file = open(f'bot-data-2/{str(uuid.uuid4())}.csv', 'w', newline='')
+        # self.csv_file = open(f'bot-data-2/{str(uuid.uuid4())}.csv', 'a', newline='')
+        self.csv_file = open(f'bot-2.csv', 'a', newline='')
+
         self.csv_file_writer = csv.writer(self.csv_file, delimiter=',')
-        self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
+        # self.csv_file_writer.writerow(['foodDiffX','foodDiffY','up_collision','down_collision','left_collision', 'right_collision','direction','action'])
         self.up_collision = 0
         self.down_collision = 0
         self.left_collision = 0
@@ -60,9 +63,12 @@ class SnakeGame:
         self.direction = Direction.RIGHT
         
         self.head = Point(self.w/2, self.h/2)
-        self.snake = [self.head, 
-                      Point(self.head.x-BLOCK_SIZE, self.head.y),
-                      Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
+        # self.snake = [self.head, 
+        #               Point(self.head.x-BLOCK_SIZE, self.head.y),
+        #               Point(self.head.x-(2*BLOCK_SIZE), self.head.y)]
+        self.snake = [self.head]
+        for i in range(1,SNAKE_LENGTH +1):
+            self.snake.append(Point(self.head.x, self.head.y + (i*BLOCK_SIZE)))
         
         self.score = 0
         self.food = None

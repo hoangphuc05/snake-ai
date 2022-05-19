@@ -1,9 +1,9 @@
 import os
 import uuid
 # assign directory
-directory = 'bot-data'
+directory = 'bot-data-2'
 merged = open(f'merged_data/{str(uuid.uuid4())}.csv', 'w', newline='')
-merged.write("foodDiffX,foodDiffY,up_collision,down_collision,left_collision,right_collision,direction,action")
+merged.write("foodDiffX,foodDiffY,up_collision,down_collision,left_collision,right_collision,direction,action\n")
 
 # iterate over files in
 # that directory
