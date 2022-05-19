@@ -2,7 +2,7 @@ f = open("report.csv","w")
 readfrom = open("./trainer/report.txt","r")
 f.write("Layers,Activation,Average Score,Average Accuracy\n")
 lines = readfrom.readlines()
-count = 0
+layer = ""
 data=[]
 for line in lines:
     sentence = ""
@@ -12,10 +12,11 @@ for line in lines:
             for individual in range(1,len(parsing)):
                 sentence+= parsing[individual]+"-"
             sentence = sentence[:-1]
+            layer = sentence.split('-')
             sentence+=","
         elif parsing[0]=="Activation:":
             for individual in range(1,len(parsing)):
-                sentence+=parsing[individual].replace(',',"")[0:3]+"-"
+                sentence+=parsing[individual].replace(',',"")[0:2]+layer[individual-1]+"-"
             sentence = sentence[:-1]
             sentence+=","
         elif parsing [0]=="Average":
