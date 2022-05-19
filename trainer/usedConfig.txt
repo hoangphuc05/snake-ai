@@ -36,3 +36,13 @@ fileSave = ['rsrs-16-32-64-16-bot2.h5', 'rrss-16-32-64-16-bot2.h5', 'srrs-16-32-
             'rere-16-32-64-16-bot2.h5', 'rree-16-32-64-16-bot2.h5', 'erre-16-32-64-16-bot2.h5', 'eerr-16-32-64-16-bot2.h5', 
             ]
 
+
+layer1 = 16
+layer2 = 8
+l1Activation = ['sigmoid','relu','elu','softmax','sigmoid','relu','sigmoid','elu','sigmoid','softmax','relu','elu','softmax','relu','softmax','elu']
+l2Activation = ['sigmoid','relu','elu','softmax','relu','sigmoid','elu','sigmoid','softmax','sigmoid','elu','relu','relu','softmax','elu','softmax']
+fileSave = ['ss-16-8-bot2.h5', 'rr-16-8-bot2.h5', 'ee-16-8-bot2.h5', 'smxsmx-16-8-bot2.h5',
+            'sr-16-8-bot2.h5', 'rs-16-8-bot2.h5', 'se-16-8-bot2.h5', 'es-16-8-bot2.h5',
+            'ssmx-16-8-bot2.h5', 'smxs-16-8-bot2.h5', 're-16-8-bot2.h5', 'er-16-8-bot2.h5',
+            'smxr-16-8-bot2.h5', 'rsmx-16-8-bot2.h5', 'smxe-16-8-bot2.h5', 'esmx-16-8-bot2.h5',
+            ]
