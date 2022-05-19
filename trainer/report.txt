@@ -246,3 +246,265 @@ Average Score: 25.0 | Average Accuracy: 0.9875368042786916
 Output as file: srrr-16-32-64-16-bot2.h5
 -------------------------------------------------------------------- 
  
+-------------------------------------------------------------------- 
+| 2 layer start w/ sigmoid, relu, elu, softmax                     |
+-------------------------------------------------------------------- 
+
+-------------------------------------------------------------------- 
+
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: sigmoid, sigmoid
+[[8,sigmoid], [16,sigmoid]]
+Average Score: 49.4 | Average Accuracy: 0.9744824526707331
+Output as file: ss-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: relu, relu
+[[8,relu], [16,relu]]
+Average Score: 26.6 | Average Accuracy: 0.9815124543507894
+Output as file: rr-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: elu, elu
+[[8,elu], [16,elu]]
+Average Score: 32.4 | Average Accuracy: 0.9922042238712311
+Output as file: ee-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: softmax, softmax
+[[8,softmax], [16,softmax]]
+Average Score: 19.4 | Average Accuracy: 0.9426147345701853
+Output as file: smxsmx-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: sigmoid, relu
+[[8,sigmoid], [16,relu]]
+Average Score: 32.6 | Average Accuracy: 0.9861905558904012
+Output as file: sr-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: relu, sigmoid
+[[8,relu], [16,sigmoid]]
+Average Score: 48.4 | Average Accuracy: 0.986347668170929
+Output as file: rs-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: sigmoid, elu
+[[8,sigmoid], [16,elu]]
+Average Score: 28.2 | Average Accuracy: 0.9882370972633362
+Output as file: se-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: elu, sigmoid
+[[8,elu], [16,sigmoid]]
+Average Score: 7.8 | Average Accuracy: 0.9742257523536683
+Output as file: es-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: sigmoid, softmax
+[[8,sigmoid], [16,softmax]]
+Average Score: 35.4 | Average Accuracy: 0.9548657941818237
+Output as file: ssmx-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: softmax, sigmoid
+[[8,softmax], [16,sigmoid]]
+Average Score: 18.4 | Average Accuracy: 0.9766344932715098
+Output as file: smxs-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: relu, elu
+[[8,relu], [16,elu]]
+Average Score: 35.4 | Average Accuracy: 0.9868960809707642
+Output as file: re-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: elu, relu
+[[8,elu], [16,relu]]
+Average Score: 42.0 | Average Accuracy: 0.9934185945987701
+Output as file: er-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: softmax, relu
+[[8,softmax], [16,relu]]
+Average Score: 25.4 | Average Accuracy: 0.9837006465593974
+Output as file: smxr-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: relu, softmax
+[[8,relu], [16,softmax]]
+Average Score: 14.2 | Average Accuracy: 0.9694746669133504
+Output as file: rsmx-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: softmax, elu
+[[8,softmax], [16,elu]]
+Average Score: 26.2 | Average Accuracy: 0.979619386990865
+Output as file: smxe-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 8 16
+Activation: elu, softmax
+[[8,elu], [16,softmax]]
+Average Score: 27.8 | Average Accuracy: 0.9670704738299052
+Output as file: esmx-8-16-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: sigmoid, sigmoid
+[[16,sigmoid], [8,sigmoid]]
+Average Score: 35.0 | Average Accuracy: 0.9778261307875316
+Output as file: ss-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: relu, relu
+[[16,relu], [8,relu]]
+Average Score: 34.2 | Average Accuracy: 0.9867517026265462
+Output as file: rr-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: elu, elu
+[[16,elu], [8,elu]]
+Average Score: 29.4 | Average Accuracy: 0.9890056081612905
+Output as file: ee-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: softmax, softmax
+[[16,softmax], [8,softmax]]
+Average Score: 29.4 | Average Accuracy: 0.9512610977888107
+Output as file: smxsmx-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: sigmoid, relu
+[[16,sigmoid], [8,relu]]
+Average Score: 39.2 | Average Accuracy: 0.9920807611942292
+Output as file: sr-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: relu, sigmoid
+[[16,relu], [8,sigmoid]]
+Average Score: 31.0 | Average Accuracy: 0.9913415861129761
+Output as file: rs-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: sigmoid, elu
+[[16,sigmoid], [8,elu]]
+Average Score: 37.4 | Average Accuracy: 0.9867105484008789
+Output as file: se-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: elu, sigmoid
+[[16,elu], [8,sigmoid]]
+Average Score: 33.0 | Average Accuracy: 0.9882111811637878
+Output as file: es-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: sigmoid, softmax
+[[16,sigmoid], [8,softmax]]
+Average Score: 27.8 | Average Accuracy: 0.9694842143853506
+Output as file: ssmx-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: softmax, sigmoid
+[[16,softmax], [8,sigmoid]]
+Average Score: 38.8 | Average Accuracy: 0.9800572967529297
+Output as file: smxs-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: relu, elu
+[[16,relu], [8,elu]]
+Average Score: 47.2 | Average Accuracy: 0.9944849566618601
+Output as file: re-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: elu, relu
+[[16,elu], [8,relu]]
+Average Score: 34.4 | Average Accuracy: 0.9794459025065104
+Output as file: er-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: softmax, relu
+[[16,softmax], [8,relu]]
+Average Score: 49.8 | Average Accuracy: 0.981306004524231
+Output as file: smxr-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: relu, softmax
+[[16,relu], [8,softmax]]
+Average Score: 25.2 | Average Accuracy: 0.9816982146104177
+Output as file: rsmx-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: softmax, elu
+[[16,softmax], [8,elu]]
+Average Score: 32.8 | Average Accuracy: 0.9821256637573242
+Output as file: smxe-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
+Running Analysis for 2 layers w/ following layers and activation functions: 
+Layers: 16 8
+Activation: elu, softmax
+[[16,elu], [8,softmax]]
+Average Score: 32.8 | Average Accuracy: 0.9879553890228272
+Output as file: esmx-16-8-bot2.h5
+-------------------------------------------------------------------- 
+ 
